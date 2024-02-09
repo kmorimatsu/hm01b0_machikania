@@ -8,7 +8,7 @@ Connect the camera to Pi Pico as follows:
 Ardcam   Pico
 
    VCC   3V3 Out
-   SCL   GP6
+   SCL   GP4
    SDA   GP5
  VSYNC   GP27
   HREF   GP6

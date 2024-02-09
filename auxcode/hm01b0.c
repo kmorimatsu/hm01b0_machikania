@@ -12,7 +12,7 @@ void hm01b0_init(uint8_t* image_buf){
 	config.sccb_mode = I2C_MODE_16_8;
 	config.sensor_address = 0x24;
 	config.pin_sioc = PIN_CAM_SIOC;     // GPIO5
-	config.pin_siod = PIN_CAM_SIOD;     // GPIO6
+	config.pin_siod = PIN_CAM_SIOD;     // GPIO4
 	config.pin_resetb = PIN_CAM_RESETB; // GPIO2
 	config.pin_xclk = PIN_CAM_XCLK;     // GPIO3
 	config.pin_vsync = 27;              // PIN_CAM_VSYNC;
