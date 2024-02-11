@@ -4,6 +4,8 @@
 
 #include "pico/stdlib.h"
 #include "arducam/arducam.h"
+#include "../interface/graphlib.h"
+#include "../interface/LCDdriver.h"
 
 static 	struct arducam_config config;
 
@@ -33,3 +35,13 @@ void hm01b0_capture(void){
 	arducam_capture_frame(&config);
 }
 
+void hm01b0_draw(void){
+	int x,y;
+	char* vram=config.image_buf;
+	for(y=0;y<240;y++){
+		for(x=0;x<320;x++){
+			drawPixel(x,y,palette[vram[x]]);
+		}
+		vram+=324;
+	}
+}
