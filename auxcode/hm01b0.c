@@ -45,3 +45,11 @@ void hm01b0_draw(void){
 		vram+=324;
 	}
 }
+
+void hm01b0_reg_write(uint16_t reg, uint8_t value){
+	arducam_reg_write(&config, reg, value);
+}
+
+uint8_t hm01b0_reg_read(uint16_t reg){
+	return arducam_reg_read(&config, reg);
+}
