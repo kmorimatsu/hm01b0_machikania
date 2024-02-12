@@ -28,11 +28,15 @@ HM01B0_DRAW
 ```
 
 ## Example BASIC code
-Note that mirror images will be shown in MachiKania LCD.
 ```console
 print "Start"
 dim b(324*324/4)
 HM01B0_INIT b
+HM01B0_REG_WRITE 0x0101,0x00 : REM Disable horizontal mirror
+HM01B0_REG_WRITE 0x2100,0x00 : REM Disable automatic exposure
+rem HM01B0_REG_WRITE 0x0202,0x00 : REM Set integration time (upper 8 bit)
+rem HM01B0_REG_WRITE 0x0203,0x02 : REM Set integration time (lower 8 bit)
+HM01B0_REG_WRITE 0x0104,0x01 : REM Hold parameter
 print "HM01B0_INIT done"
 HM01B0_CAPTURE
 print "HM01B0_CAPTURE done"

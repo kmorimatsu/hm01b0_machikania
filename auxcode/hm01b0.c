@@ -36,14 +36,8 @@ void hm01b0_capture(void){
 }
 
 void hm01b0_draw(void){
-	int x,y;
-	char* vram=config.image_buf;
-	for(y=0;y<240;y++){
-		for(x=0;x<320;x++){
-			drawPixel(x,y,palette[vram[x]]);
-		}
-		vram+=324;
-	}
+	g_putbmpmn(0,0,324,240,config.image_buf);
+	return;
 }
 
 void hm01b0_reg_write(uint16_t reg, uint8_t value){
