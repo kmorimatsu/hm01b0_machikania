@@ -25,6 +25,8 @@ HM01B0_CAPTURE
     Capture an image and store to buffer.
 HM01B0_DRAW
     Draw the image on LCD.
+HM01B0_REG_WRITE x,y
+    Write the value (y; 8 bit integer) to the register (x;16 bit integer).
 ```
 
 ## Example BASIC code
