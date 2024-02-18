@@ -83,3 +83,12 @@ void hm01b0_zoom(int x_start, int y_start){
 		view_area+=328; // = 324 * 2 - 160 * 2
 	}
 }
+
+int* hm01b0_analyze(int raw_num){
+	static int data[8];
+	int i;
+	raw_num*=324;
+	for(i=0;i<8;i++) data[i]=0;
+	for(i=0;i<raw_num;i++) data[config.image_buf[i]>>5]++;
+	return &data[0];
+}

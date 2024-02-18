@@ -12,6 +12,7 @@
 #define LIB_AUX_HM01B0_REG_WRITE 4
 //#define LIB_AUX_HM01B0_REG_READ 5
 #define LIB_AUX_HM01B0_ZOOM 6
+#define LIB_AUX_HM01B0_ANALYZE 7
 
 void hm01b0_init(uint8_t* buff);
 void hm01b0_capture(void);
@@ -19,6 +20,7 @@ void hm01b0_draw(void);
 void hm01b0_reg_write(uint16_t reg, uint8_t value);
 // uint8_t hm01b0_reg_read(uint16_t reg);
 void hm01b0_zoom(int x_start, int y_start);
+int* hm01b0_analyze(int raw_num);
 
 int hm01b0_init_statement(void){
 	// The first argument is the pointer to video buffer (324*324 bytes)
@@ -55,6 +57,14 @@ int hm01b0_zoom_statement(void){
 		LIB_AUX_HM01B0_ZOOM<<LIBOPTION);
 }
 
+int hm01b0_analyze_function(void){
+	// The first argument is number of raws to analyze (default 240).
+	g_default_args[1]=240;
+	return argn_function(LIB_AUXCODE,
+		ARG_INTEGER_OPTIONAL<<ARG1 |
+		LIB_AUX_HM01B0_ANALYZE<<LIBOPTION);
+}
+
 /*
 int hm01b0_reg_read_function(void){
 	// The first argument is register number.
@@ -74,6 +84,7 @@ int aux_statements(void){
 }
 int aux_int_functions(void){
 //	if (instruction_is("HM01B0_REG_READ(")) return hm01b0_reg_read_function();
+	if (instruction_is("HM01B0_ANALYZE(")) return hm01b0_analyze_function();
 	return ERROR_STATEMENT_NOT_DETECTED;
 }
 int aux_str_functions(void){
@@ -102,6 +113,9 @@ int lib_aux(int r0, int r1, int r2){
 */
 		case LIB_AUX_HM01B0_ZOOM:
 			hm01b0_zoom(r1, r0);
+			break;
+		case LIB_AUX_HM01B0_ANALYZE:
+			return (int)hm01b0_analyze(r0);
 			break;
 		default:
 			break;
