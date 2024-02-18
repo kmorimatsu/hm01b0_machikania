@@ -55,28 +55,31 @@ void hm01b0_zoom(int x_start, int y_start){
 	if (x_start<0) x_start=0;
 	if (y_start<0) y_start=0;
 	if (160<x_start) x_start=160;
-	if (120<y_start) y_start=120;
+	if (119<y_start) y_start=119;
 	// Copy the area of interest to temporary area
 	int read_area=y_start*324+x_start;
-	int temp_area=240*324; // 84*324=27216 bytes free area (160*120=19200 bytes needed)
-	for(y=y_start;y<y_start+120;y++){
+	int temp_area=240*324; // 84*324=27216 bytes free area (160*121=19360 bytes needed)
+	for(y=y_start;y<y_start+121;y++){
 		for(x=x_start;x<x_start+160;x++){
 			buff[temp_area++]=buff[read_area++];
 		}
-		read_area+=164;
+		read_area+=164; // = 324-160
 	}
 	// Copy the temporary area to entier view
-	char c;
+	char c,cx,cy,cxy;
 	temp_area=240*324;
 	int view_area=0;
 	for(y=0;y<120;y++){
 		for(x=0;x<160;x++){
+			cy=buff[temp_area+160];
 			c=buff[temp_area++];
-			buff[view_area+324]=c;
+			cx=buff[temp_area];
+			cxy=buff[temp_area+160];
+			buff[view_area+324]=(c+cy)>>1;
 			buff[view_area++]=c;
-			buff[view_area+324]=c;
-			buff[view_area++]=c;
+			buff[view_area+324]=(c+cx+cy+cxy)>>2;
+			buff[view_area++]=(c+cx)>>1;
 		}
-		view_area+=328;
+		view_area+=328; // = 324 * 2 - 160 * 2
 	}
 }
