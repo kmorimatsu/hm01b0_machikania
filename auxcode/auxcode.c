@@ -11,12 +11,14 @@
 #define LIB_AUX_HM01B0_DRAW 3
 #define LIB_AUX_HM01B0_REG_WRITE 4
 //#define LIB_AUX_HM01B0_REG_READ 5
+#define LIB_AUX_HM01B0_ZOOM 6
 
 void hm01b0_init(uint8_t* buff);
 void hm01b0_capture(void);
 void hm01b0_draw(void);
 void hm01b0_reg_write(uint16_t reg, uint8_t value);
 // uint8_t hm01b0_reg_read(uint16_t reg);
+void hm01b0_zoom(int x_start, int y_start);
 
 int hm01b0_init_statement(void){
 	// The first argument is the pointer to video buffer (324*324 bytes)
@@ -44,6 +46,15 @@ int hm01b0_reg_write_statement(void){
 		LIB_AUX_HM01B0_REG_WRITE<<LIBOPTION);
 }
 
+int hm01b0_zoom_statement(void){
+	// The first argument is X.
+	// The second argument is Y;
+	return argn_function(LIB_AUXCODE,
+		ARG_INTEGER<<ARG1 |
+		ARG_INTEGER<<ARG2 |
+		LIB_AUX_HM01B0_ZOOM<<LIBOPTION);
+}
+
 /*
 int hm01b0_reg_read_function(void){
 	// The first argument is register number.
@@ -58,6 +69,7 @@ int aux_statements(void){
 	if (instruction_is("HM01B0_CAPTURE")) return hm01b0_capture_statement();
 	if (instruction_is("HM01B0_DRAW")) return hm01b0_draw_statement();
 	if (instruction_is("HM01B0_REG_WRITE")) return hm01b0_reg_write_statement();
+	if (instruction_is("HM01B0_ZOOM")) return hm01b0_zoom_statement();
 	return ERROR_STATEMENT_NOT_DETECTED;
 }
 int aux_int_functions(void){
@@ -88,6 +100,9 @@ int lib_aux(int r0, int r1, int r2){
 		case LIB_AUX_HM01B0_REG_READ:
 			return hm01b0_reg_read((uint16_t) r0);
 */
+		case LIB_AUX_HM01B0_ZOOM:
+			hm01b0_zoom(r1, r0);
+			break;
 		default:
 			break;
 	}

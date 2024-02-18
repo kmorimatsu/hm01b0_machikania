@@ -1,4 +1,4 @@
-# Default Auxiliary CMakeLists definition
+# HM01B0 Camera CMakeLists definition
 
 add_library(aux_files
 	auxcode/auxcode.c
