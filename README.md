@@ -11,8 +11,8 @@ Ardcam   Pico
    SCL   GP4
    SDA   GP5
  VSYNC   GP27
-  HREF   GP6
-  PCLK   GP5
+  HREF   GP7
+  PCLK   GP6
     D0   GP1
    GND   GND
 ```
