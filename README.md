@@ -63,3 +63,5 @@ label set_palette
   next
 return
 ```
+## License of files in this repository.
+The license of codes here is LGPL ver 2.1.
