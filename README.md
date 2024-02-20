@@ -27,6 +27,10 @@ HM01B0_DRAW
     Draw the image on LCD.
 HM01B0_REG_WRITE x,y
     Write the value (y; 8 bit integer) to the register (x; 16 bit integer).
+HM01B0_ZOOM x,y
+    Zoom (2x) into rectangle area starting from (x,y). This statement must be used after HM01B0_CAPTURE statement.
+HM01B0_ANALYZE([x])
+	Returns the pointer to dimension containing 8 integer, which are numbers of pixels with value of 0x00-0x1f, 0x20-0x3f, 0x40-0x5f, 0x60-0x7f, 0x80-0x9f, 0xa0-0xbf, 0xc0-0xdf, and 0xe0-0xff, respectively. x is the number of rows analyzed (default: 240).
 ```
 
 ## Example BASIC code
@@ -38,7 +42,8 @@ HM01B0_REG_WRITE 0x0101,0x00 : REM Disable horizontal mirror
 HM01B0_REG_WRITE 0x2100,0x00 : REM Disable automatic exposure
 rem HM01B0_REG_WRITE 0x0202,0x00 : REM Set integration time (upper 8 bit)
 rem HM01B0_REG_WRITE 0x0203,0x02 : REM Set integration time (lower 8 bit)
-HM01B0_REG_WRITE 0x0104,0x01 : REM Hold parameter
+rem HM01B0_REG_WRITE 0x0205,0x30 : REM Set analog gain (either 0x00, 0x10, 0x20, or 0x30)
+HM01B0_REG_WRITE 0x0104,0x01 : REM Hold parameter (required to send above register values)
 print "HM01B0_INIT done"
 HM01B0_CAPTURE
 print "HM01B0_CAPTURE done"
@@ -53,7 +58,7 @@ end
 
 label set_palette
   var i
-  for i=0 to 255
+  for i=8 to 255
     palette i,i,i,i
   next
 return
